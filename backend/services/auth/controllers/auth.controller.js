@@ -13,11 +13,8 @@ export const login = async (req, res) => {
 
         let user = await User.findOne({firebaseUid : uid });
 
-        console.log("Decoded Token: ", decodedToken);
-        console.log("User: ", user);
-
         if(!user){
-            console.log("User not found, creating new user");
+            
             user = await User.create({
                 firebaseUid: uid,
                 name: decodedToken.name,

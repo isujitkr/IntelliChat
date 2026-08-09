@@ -6,14 +6,21 @@ import { FcGoogle } from "react-icons/fc";
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 const Home = () => {
 
   const [loading, setLoading] = useState(false);
+  const { userData } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
 
   const handleLogin = async (token) => {
+    
     try {
-      const { data } = await api.post("/auth/login", { token });
+      const { data } = await api.post("/api/auth/login", { token });
+      dispatch(setUserData(data.user));
 
       toast.success("Login successful!");
 
@@ -51,8 +58,7 @@ const Home = () => {
 
   return (
     <div className = "h-screen bg-black flex text-white overflow-hidden">
-        
-      <div className = "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      {!userData && (<div className = "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
         <div className = "w-[340px] bg-[#13131c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5 ">
             <div classsName = "flex flex-col gap-1">
                 <h2 clasName = "text-[17px] font-semibold text-slate-100 tracking-tight">Welcome to IntelliChat</h2>
@@ -63,7 +69,8 @@ const Home = () => {
                 Continue with Google
             </button>
         </div>
-      </div>
+      </div>)}
+      
     </div>
   )
 }
