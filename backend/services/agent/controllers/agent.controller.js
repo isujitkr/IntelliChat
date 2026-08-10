@@ -13,7 +13,6 @@ export const agent = async (req, res) =>{
         const result = await graph.invoke({
             prompt,
             conversationId
-
         })
 
         const response = result.aiResponse;
