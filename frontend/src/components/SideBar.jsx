@@ -118,7 +118,7 @@ const SideBar = () => {
   }
 
   return (
-    <div className="fixed lg:static insert-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-while/[0.06]">
+    <div className="fixed lg:static insert-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06]">
       <div className="flex flex-col h-full">
         {/* Top Bar */}
 
