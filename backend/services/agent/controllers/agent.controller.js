@@ -17,6 +17,8 @@ export const agent = async (req, res) =>{
 
         const response = result.aiResponse;
 
+        console.log("Response : ", response);
+
         return res.status(200).json({response});
         
     } catch (error) {
