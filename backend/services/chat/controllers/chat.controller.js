@@ -5,7 +5,7 @@ import Message from "../models/message.model.js";
 export const createConversation = async (req, res) => {
   try {
     const userId = req.headers["x-user-id"];
-    console.log("User ID from header:", userId);
+   
     if (!userId) {
       return res.status(400).json({ error: "User ID is required" });
     }

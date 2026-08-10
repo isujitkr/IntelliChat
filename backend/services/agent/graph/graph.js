@@ -48,7 +48,7 @@ workFlow.addConditionalEdges("router", (state) => {
     vision: "vision"
 });
 
-workFlow.addNode("search", "chat");
+workFlow.addEdge("search", "chat");
 
 workFlow.addEdge("chat", "__end__");
 workFlow.addEdge("coding", "__end__");
