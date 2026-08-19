@@ -21,6 +21,7 @@ import { createConversation } from "../features/createConversation";
 import logOut from "../features/logOut";
 import { setUserData } from "../redux/userSlice";
 import { toast } from "react-toastify";
+import { setMessages } from "../redux/messageSlice";
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,9 +32,13 @@ const SideBar = () => {
     (state) => state.conversation,
   );
 
+  const { messages } = useSelector((state) => state.message);
+
   const { userData } = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (!userData?._id) return;
+
     const getConv = async () => {
       const data = await getConversations();
 
@@ -46,6 +51,8 @@ const SideBar = () => {
   const handleLogout = async () => {
     try {
       await logOut();
+      dispatch(setMessages(null));
+      dispatch(setConversations(null));
       dispatch(setUserData(null));
       toast.success("Logged out successfully!");
     } catch (error) {
@@ -80,7 +87,7 @@ const SideBar = () => {
         </button>
 
         <div className="flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pt-5">
-          {conversations.map((conv, index) => {
+          {conversations?.map((conv, index) => {
             const isActive = selectedConversation?._id == conv?._id;
 
             return (
@@ -156,7 +163,7 @@ const SideBar = () => {
           </button>
         </div>
 
-        {conversations.length == 0 ? (
+        {conversations?.length == 0 ? (
           <div className="px-5 pt-4 pb-1.5 text-[10.5px] font-semibold uppercase tracking-widest text-slate-600">
             No Recent Conversations
           </div>
@@ -167,7 +174,7 @@ const SideBar = () => {
         )}
 
         <div className="flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ">
-          {conversations.map((conv, index) => {
+          {conversations?.map((conv, index) => {
             const isActive = selectedConversation?._id == conv?._id;
 
             return (
