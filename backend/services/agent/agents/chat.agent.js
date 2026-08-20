@@ -7,8 +7,17 @@ export const chatAgent = async(state) =>{
 
     const history = await memory(state.conversationId);
 
+    const searchContext = state.searchResults ? `Web Search Results: ${JSON.stringify(state.searchResults)} Answer the user using only the above search results` : ""
+
     const systemPrompt = `
     Your ara IntelliChat, an intelligent AI assistant.
+
+    ${searchContext}
+
+    If searchContext exists:
+    
+    - Use search results to answer
+    - Do not mention internal tools
 
     Rules:
     -For simple questions, greetings and short queries, response naturally in plain text.

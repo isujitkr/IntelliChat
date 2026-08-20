@@ -4,7 +4,7 @@ import { addMessage } from '../config/memory.js';
 
 export const agent = async (req, res) =>{
     try {
-        const {prompt, conversationId} = req.body;
+        const {prompt, conversationId, agent} = req.body;
 
         if(!prompt || !conversationId){
             return res.status(400).json({message : "Both prompt and conversationId required"});
@@ -18,7 +18,8 @@ export const agent = async (req, res) =>{
 
         const result = await graph.invoke({
             prompt,
-            conversationId
+            conversationId,
+            agent
         })
 
         const response = result.aiResponse;
@@ -29,10 +30,14 @@ export const agent = async (req, res) =>{
         await axios.post(`${process.env.CHAT_SERVICE_URL}/save-message`, {
             conversationId,
             role: "assistant",
-            content: response
+            content: response,
+            images: result.images
         });
 
-        return res.status(200).json({response});
+        return res.status(200).json({
+            answer: response,
+            images: result.images
+        });
         
     } catch (error) {
         return res.status(500).json( {error: error.message});
