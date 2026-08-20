@@ -5,6 +5,11 @@ import { addMessage } from '../config/memory.js';
 export const agent = async (req, res) =>{
     try {
         const {prompt, conversationId} = req.body;
+
+        if(!prompt || !conversationId){
+            return res.status(400).json({message : "Both prompt and conversationId required"});
+        }
+
         await axios.post(`${process.env.CHAT_SERVICE_URL}/save-message`, {
             conversationId,
             role: "user",

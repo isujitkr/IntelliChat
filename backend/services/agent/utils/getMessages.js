@@ -3,8 +3,7 @@ import axios from "axios";
 export const getMessages = async (conversationId)=>{
     try {
         const {data} = await axios.get(`${process.env.CHAT_SERVICE_URL}/get-messages/${conversationId}`);
-
-        return data;
+        return data.messages;
     } catch (error) {
         console.log(error);
         return null;
