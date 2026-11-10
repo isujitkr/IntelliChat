@@ -6,8 +6,7 @@ const sendMessage = async(payload) =>{
         
         return data;
     } catch (error) {
-        console.log("Error in send message: ", error.message);
-        return null;
+        throw error;
     }
 }
 

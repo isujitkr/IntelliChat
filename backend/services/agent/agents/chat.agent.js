@@ -48,10 +48,24 @@ export const chatAgent = async(state) =>{
 
     messages.push(new HumanMessage(state.prompt));
 
-    const response = await llm.invoke(messages);
-
-    return {
-        ...state,
-        aiResponse: response.content
+    try {
+        const response = await llm.invoke(messages);
+    
+        return {
+            ...state,
+            aiResponse: response.content
+        }
+    } catch (error) {
+        
+        if (
+            error.status === 429 ||
+            error.message?.includes("quota") ||
+            error.message?.includes("rate limit")
+        ) {
+            console.error("LLM usage limit exceeded. Please try again later.");
+            throw new Error("LLM usage limit exceeded. Please try again later.");
+        }
+        throw error;
     }
+
 }

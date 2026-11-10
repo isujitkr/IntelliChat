@@ -37,7 +37,7 @@ workFlow.addConditionalEdges("router", (state) => {
             return "vision";
     
         default:
-            return "char=t";
+            return "chat";
     }
 },{
     chat: "chat",

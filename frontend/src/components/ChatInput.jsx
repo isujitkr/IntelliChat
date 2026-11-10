@@ -11,6 +11,8 @@ import {
   Zap,
 } from "lucide-react";
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import sendMessage from "../features/sendMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, setMessages } from "../redux/messageSlice";
@@ -64,18 +66,25 @@ const ChatInput = () => {
 
     setValue("");
 
-    console.log(payload)
+    let data;
+    try{
+      data = await sendMessage(payload);
+      
+      dispatch(addMessage({ 
+          role: "assistant", 
+          content: data.answer,
+          images: data.images
+        })
+      );
+    } catch(error){
+        toast.error(
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "Something went wrong. Please try again."
+      );
+    }
+    
 
-    const data = await sendMessage(payload);
-
-    console.log(data)
-
-    dispatch(addMessage({ 
-        role: "assistant", 
-        content: data.answer,
-        images: data.images
-      })
-    );
   };
 
   const agents = [
