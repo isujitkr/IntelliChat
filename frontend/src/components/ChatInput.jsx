@@ -15,7 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import sendMessage from "../features/sendMessage";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage, setMessages } from "../redux/messageSlice";
+import { addMessage, setArtifacts } from "../redux/messageSlice";
 import { createConversation } from "../features/createConversation";
 import {
   addConversation,
@@ -70,6 +70,7 @@ const ChatInput = () => {
     try{
       data = await sendMessage(payload);
       
+      dispatch(setArtifacts(data?.artifacts || []));
       dispatch(addMessage({ 
           role: "assistant", 
           content: data.answer,

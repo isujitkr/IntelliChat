@@ -20,9 +20,11 @@ export const codingAgent = async (state) => {
         Generate the requested project.
 
         Default Stack:
-        - Frontend: React.js
-        - Backend: Node.js with Express.js
-        - Database: MongoDB
+        - HTML
+        - CSS
+        - JavaScript
+
+        Use React/ Next/ Vue or any another technology if requested
         
         Rules:
         -Responsive
@@ -31,7 +33,12 @@ export const codingAgent = async (state) => {
         -Include comments and documentation where necessary
         -Include error handling and input validation
         -Follow secure coding practices
-        -Do not include any sensitive information like API keys, passwords, or tokens in the code
+
+        IMAGES
+        ==============
+        Always use real Unsplash images.
+        Always use working link 
+        Never use placeholders.
 
         Return only valid JSON output with the following Schema:
 
@@ -62,8 +69,6 @@ export const codingAgent = async (state) => {
         .trim();
     
     const data = JSON.parse(content);
-
-    console.log("Code Generation Data:", data);
 
     return {
         ...state,

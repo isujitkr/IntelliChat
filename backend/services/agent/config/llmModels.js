@@ -2,7 +2,7 @@ import { ChatGroq } from "@langchain/groq"
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai"
 import { ChatOpenRouter } from "@langchain/openrouter";
 
-const groq = new ChatGroq({
+const grok = new ChatGroq({
     model: "openai/gpt-oss-120b",
 });
 
@@ -27,6 +27,6 @@ export const getModel = (agent) => {
             return openRouter;
       
         default:
-            return gemini;
+            return grok;
     }
 }
