@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Coins,
   LogOut,
+  Menu,
   MessageSquare,
   PanelLeftIcon,
   PanelRight,
@@ -9,6 +10,7 @@ import {
   PenSquare,
   Plus,
   User,
+  X,
 } from "lucide-react";
 import { getConversations } from "../features/getConversations";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +37,8 @@ const SideBar = () => {
   const { messages } = useSelector((state) => state.message);
 
   const { userData } = useSelector((state) => state.user);
+
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     if (!userData?._id) return;
@@ -128,7 +132,16 @@ const SideBar = () => {
   }
 
   return (
-    <div className="fixed lg:static insert-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06]">
+    <>
+
+      <button className="lg:hidden fixed top-3.5 left-4 z-50 flex items-center justify-center w-8 h-8 rounded-lg bg-[#0d0f14] border border-white/[0.06] text-slate-400 hover:text-slate-2 transition-colors duration-150 cursor-pointer" onClick={() => setMobileOpen(true)}>
+        <Menu size={14}/>
+      </button>
+
+      {mobileOpen && <div onClick={() => setMobileOpen(false)} className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"/>}
+      
+      <div className={`fixed lg:static inset-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06] transition-transform duration-250 ${mobileOpen ? "transition-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+
       <div className="flex flex-col h-full">
         {/* Top Bar */}
 
@@ -139,6 +152,10 @@ const SideBar = () => {
           >
             <PanelLeftIcon />
           </div>
+
+          <button onClick={() => setMobileOpen(false)} className="lg:hidden flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer">
+            <X size={14}/>
+          </button>
 
           <span className="text-[16px] font-semibold text-slate-100 tracking-tight flex-1">
             IntelliChat
@@ -258,6 +275,7 @@ const SideBar = () => {
         </div>
       </div>
     </div>
+    </> 
   );
 };
 
